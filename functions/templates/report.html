@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Arial', sans-serif; font-size: 12px; color: #1a1a1a; }
+
+  .header { display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid #2c3e50; padding-bottom: 12px; margin-bottom: 16px; }
+  .lab-name { font-size: 20px; font-weight: 700; color: #2c3e50; }
+  .lab-logo { height: 60px; object-fit: contain; }
+
+  .patient-section { display: grid; grid-template-columns: 1fr 1fr;
+                     gap: 6px; margin-bottom: 16px; background: #f8f9fa;
+                     padding: 12px; border-radius: 6px; }
+  .patient-label { font-size: 10px; color: #6c757d; text-transform: uppercase; }
+  .patient-value { font-size: 13px; font-weight: 600; }
+
+  .report-title { font-size: 16px; font-weight: 700; text-align: center;
+                  color: #2c3e50; margin-bottom: 12px;
+                  text-transform: uppercase; letter-spacing: 1px; }
+
+  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+  th { background: #2c3e50; color: white; padding: 8px 10px;
+       text-align: left; font-size: 11px; text-transform: uppercase; }
+  td { padding: 7px 10px; border-bottom: 1px solid #e9ecef; font-size: 12px; }
+  tr:nth-child(even) td { background: #f8f9fa; }
+  .abnormal td { background: #fff5f5; }
+  .value-cell strong { color: #c0392b; font-size: 13px; }
+
+  .footer { display: flex; justify-content: space-between; align-items: flex-end;
+            margin-top: 24px; border-top: 1px solid #dee2e6; padding-top: 12px; }
+  .qr-section { text-align: center; }
+  .qr-section img { width: 90px; height: 90px; }
+  .qr-label { font-size: 9px; color: #6c757d; margin-top: 4px; }
+  .signature-line { border-top: 1px solid #2c3e50; width: 160px;
+                    padding-top: 4px; text-align: center; font-size: 10px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="lab-name">{{labName}}</div>
+    <div style="font-size:10px;color:#6c757d;margin-top:4px">Lab Report</div>
+  </div>
+  {{#if labLogoUrl}}
+  <img class="lab-logo" src="{{labLogoUrl}}" alt="Lab logo">
+  {{/if}}
+</div>
+
+<div class="patient-section">
+  <div><div class="patient-label">Patient Name</div><div class="patient-value">{{patientName}}</div></div>
+  <div><div class="patient-label">Age / Sex</div><div class="patient-value">{{patientAge}} yrs / {{patientSex}}</div></div>
+  <div><div class="patient-label">Report Date</div><div class="patient-value">{{reportDate}}</div></div>
+  <div><div class="patient-label">Ref. Doctor</div><div class="patient-value">{{referralDoctor}}</div></div>
+  <div><div class="patient-label">Report ID</div><div class="patient-value" style="font-size:10px">{{reportId}}</div></div>
+</div>
+
+<div class="report-title">{{testType}}</div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:35%">Parameter</th>
+      <th style="width:20%">Result</th>
+      <th style="width:15%">Unit</th>
+      <th style="width:30%">Reference Range</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each values}}
+    <tr class="{{#if (eq flag 'HIGH')}}abnormal{{/if}}{#if (eq flag 'LOW')}}abnormal{{/if}}">
+      <td>{{parameterName}}</td>
+      <td class="value-cell">
+        {{#if (eq flag 'HIGH')}}<strong>{{value}} ↑</strong>{{/if}}
+        {{#if (eq flag 'LOW')}}<strong>{{value}} ↓</strong>{{/if}}
+        {{#if (eq flag 'NORMAL')}}{{value}}{{/if}}
+        {{#if (eq flag 'NA')}}{{value}}{{/if}}
+      </td>
+      <td>{{unit}}</td>
+      <td>{{normalMin}} – {{normalMax}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<div class="footer">
+  <div>
+    <div class="signature-line">Authorised Signatory</div>
+    <div style="font-size:9px;color:#6c757d;margin-top:8px">
+      * Abnormal values are indicated in <strong style="color:#c0392b">bold red</strong> with ↑ (high) or ↓ (low)
+    </div>
+  </div>
+  <div class="qr-section">
+    <img src="{{qrCodeDataUrl}}" alt="Report QR Code">
+    <div class="qr-label">Scan to view report online</div>
+    <div class="qr-label">Valid until {{qrExpiryDate}}</div>
+  </div>
+</div>
+
+</body>
+</html>

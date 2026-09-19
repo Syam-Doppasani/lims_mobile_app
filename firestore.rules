@@ -1,0 +1,137 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helpers ────────────────────────────────────────────────
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated()
+        && request.auth.token.role == 'admin';
+    }
+
+    function isTechnician() {
+      return isAuthenticated()
+        && request.auth.token.role == 'technician';
+    }
+
+    // Owner checks if their request UID matches the document ID
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isApproved() {
+      return isAuthenticated()
+        && request.auth.token.approved == true;
+    }
+
+    function onlyChanges(allowedFields) {
+      return request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(allowedFields);
+    }
+
+    // ── users ──────────────────────────────────────────────────
+    match /users/{userId} {
+      // Any authenticated user can read their own document
+      allow read: if isOwner(userId);
+      // Admin can read all users
+      allow read: if isAdmin();
+
+      // Only admin can create users (post-approval)
+      allow create: if isAdmin();
+
+      // Admin can update any field
+      allow update: if isAdmin();
+
+      // Technician can only update their own name and labLogoUrl
+      allow update: if isOwner(userId)
+        && isTechnician()
+        && isApproved()
+        && onlyChanges(['name', 'labLogoUrl']);
+
+      // Nobody deletes users — use isActive: false
+      allow delete: if false;
+    }
+
+    // ── templates ──────────────────────────────────────────────
+    match /templates/{templateId} {
+      // Admin: full access
+      allow read, write: if isAdmin();
+
+      // Approved technician: read only templates assigned to them
+      allow read: if isTechnician()
+        && isApproved()
+        && resource.data.status == 'active'
+        && get(/databases/$(database)/documents/users/$(request.auth.uid))
+           .data.assignedTemplateIds.hasAny([templateId]);
+    }
+
+    // ── templateAssignments ────────────────────────────────────
+    match /templateAssignments/{assignmentId} {
+      allow read, write: if isAdmin();
+      allow read: if isTechnician()
+        && isApproved()
+        && resource.data.technicianId == request.auth.uid;
+    }
+
+    // ── patients ───────────────────────────────────────────────
+    match /patients/{patientId} {
+      // Technician can only access their own patients
+      allow read, create: if isTechnician()
+        && isApproved()
+        && request.resource.data.technicianId == request.auth.uid;
+
+      allow update: if isTechnician()
+        && isApproved()
+        && resource.data.technicianId == request.auth.uid
+        && onlyChanges(['name', 'age', 'sex', 'mobile']);
+
+      // Technicians cannot delete patient records
+      allow delete: if false;
+
+      // Admin can read all patients for audit
+      allow read: if isAdmin();
+    }
+
+    // ── referralDoctors ────────────────────────────────────────
+    match /referralDoctors/{doctorId} {
+      allow read, create, update: if isTechnician()
+        && isApproved()
+        && (resource == null
+            ? request.resource.data.technicianId == request.auth.uid
+            : resource.data.technicianId == request.auth.uid);
+
+      // Cannot delete the "self" entry
+      allow delete: if isTechnician()
+        && isApproved()
+        && resource.data.technicianId == request.auth.uid
+        && resource.data.isSelf == false;
+
+      allow read: if isAdmin();
+    }
+
+    // ── reports ────────────────────────────────────────────────
+    match /reports/{reportId} {
+      // Technician: create their own reports
+      allow create: if isTechnician()
+        && isApproved()
+        && request.resource.data.technicianId == request.auth.uid
+        && request.resource.data.status == 'pending';
+
+      // Technician: read their own reports
+      allow read: if isTechnician()
+        && isApproved()
+        && resource.data.technicianId == request.auth.uid;
+
+      // Technician cannot update reports after creation
+      // (Cloud Functions update status, pdfUrl, qrToken via admin SDK)
+      allow update: if false;
+      allow delete: if false;
+
+      // Admin: full read access
+      allow read: if isAdmin();
+    }
+  }
+}

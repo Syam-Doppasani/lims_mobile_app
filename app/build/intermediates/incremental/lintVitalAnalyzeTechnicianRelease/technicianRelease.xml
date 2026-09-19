@@ -1,0 +1,38 @@
+<variant
+    name="technicianRelease"
+    useSupportLibraryVectorDrawables="true"
+    package="com.labapp"
+    minSdkVersion="26"
+    targetSdkVersion="34"
+    mergedManifest="build\intermediates\merged_manifest\technicianRelease\AndroidManifest.xml"
+    proguardFiles="build\intermediates\default_proguard_files\global\proguard-android-optimize.txt-8.2.2;proguard-rules.pro"
+    partialResultsDir="build\intermediates\lint_vital_partial_results\technicianRelease\out"
+    desugaredMethodsFiles="C:\Users\Ezekiel\.gradle\caches\8.9\transforms\ad8eba95901087c756f6193a5b107e5e\transformed\D8BackportedDesugaredMethods.txt">
+  <buildFeatures
+      namespacing="REQUIRED"/>
+  <sourceProviders>
+    <sourceProvider
+        manifests="src\main\AndroidManifest.xml"
+        javaDirectories="src\main\java;src\technician\java;src\release\java;src\technicianRelease\java;src\main\kotlin;src\technician\kotlin;src\release\kotlin;src\technicianRelease\kotlin"
+        resDirectories="src\main\res;src\technician\res;src\release\res;src\technicianRelease\res"
+        assetsDirectories="src\main\assets;src\technician\assets;src\release\assets;src\technicianRelease\assets"/>
+  </sourceProviders>
+  <testSourceProviders>
+  </testSourceProviders>
+  <testFixturesSourceProviders>
+  </testFixturesSourceProviders>
+  <resValues>
+    <resValue
+        type="string"
+        name="app_name"
+        value="Lab Reporter" />
+  </resValues>
+  <artifact
+      classOutputs="build\intermediates\javac\technicianRelease\classes;build\tmp\kotlin-classes\technicianRelease;build\tmp\kapt3\classes\technicianRelease;build\kotlinToolingMetadata;build\intermediates\hilt\component_classes\technicianRelease;build\intermediates\compile_and_runtime_not_namespaced_r_class_jar\technicianRelease\R.jar"
+      type="MAIN"
+      applicationId="faition.technician"
+      generatedSourceFolders="build\generated\source\kapt\technicianRelease;build\generated\ap_generated_sources\technicianRelease\out"
+      generatedResourceFolders="build\generated\res\resValues\technician\release"
+      desugaredMethodsFiles="C:\Users\Ezekiel\.gradle\caches\8.9\transforms\ad8eba95901087c756f6193a5b107e5e\transformed\D8BackportedDesugaredMethods.txt">
+  </artifact>
+</variant>

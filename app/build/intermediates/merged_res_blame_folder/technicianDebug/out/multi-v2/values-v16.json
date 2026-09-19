@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.labapp-mergeTechnicianDebugResources-3:/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Ezekiel\\.gradle\\caches\\8.9\\transforms\\25c361f4cc87c2f93fba13f097f7ef67\\transformed\\core-1.12.0\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,38 @@
+<variant
+    name="adminRelease"
+    useSupportLibraryVectorDrawables="true"
+    package="com.labapp"
+    minSdkVersion="26"
+    targetSdkVersion="34"
+    mergedManifest="build\intermediates\merged_manifest\adminRelease\AndroidManifest.xml"
+    manifestMergeReport="build\outputs\logs\manifest-merger-admin-release-report.txt"
+    proguardFiles="build\intermediates\default_proguard_files\global\proguard-android-optimize.txt-8.2.2;proguard-rules.pro"
+    partialResultsDir="build\intermediates\lint_vital_partial_results\adminRelease\out">
+  <buildFeatures
+      namespacing="REQUIRED"/>
+  <sourceProviders>
+    <sourceProvider
+        manifests="src\main\AndroidManifest.xml"
+        javaDirectories="src\main\java;src\admin\java;src\release\java;src\adminRelease\java;src\main\kotlin;src\admin\kotlin;src\release\kotlin;src\adminRelease\kotlin"
+        resDirectories="src\main\res;src\admin\res;src\release\res;src\adminRelease\res"
+        assetsDirectories="src\main\assets;src\admin\assets;src\release\assets;src\adminRelease\assets"/>
+  </sourceProviders>
+  <testSourceProviders>
+  </testSourceProviders>
+  <testFixturesSourceProviders>
+  </testFixturesSourceProviders>
+  <resValues>
+    <resValue
+        type="string"
+        name="app_name"
+        value="Lab Admin" />
+  </resValues>
+  <artifact
+      classOutputs="build\intermediates\javac\adminRelease\classes;build\tmp\kotlin-classes\adminRelease;build\tmp\kapt3\classes\adminRelease;build\kotlinToolingMetadata;build\intermediates\hilt\component_classes\adminRelease;build\intermediates\compile_and_runtime_not_namespaced_r_class_jar\adminRelease\R.jar"
+      type="MAIN"
+      applicationId="faition.admin"
+      generatedSourceFolders="build\generated\source\kapt\adminRelease;build\generated\ap_generated_sources\adminRelease\out"
+      generatedResourceFolders="build\generated\res\resValues\admin\release"
+      desugaredMethodsFiles="C:\Users\Ezekiel\.gradle\caches\8.9\transforms\ad8eba95901087c756f6193a5b107e5e\transformed\D8BackportedDesugaredMethods.txt">
+  </artifact>
+</variant>

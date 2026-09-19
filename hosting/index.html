@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LIMS Online Report Viewer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+    .card {
+      background-color: #1e293b;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+      padding: 24px;
+      border: 1px solid #334155;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+    .lab-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0d9488;
+    }
+    .subtitle {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+    .patient-section {
+      background-color: #0f172a;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      border: 1px solid #1e293b;
+    }
+    .patient-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .patient-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #64748b;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+    .patient-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+    .report-title {
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
+      color: #0d9488;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th {
+      background-color: #0f172a;
+      color: #94a3b8;
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 2px solid #334155;
+    }
+    td {
+      padding: 12px;
+      font-size: 13px;
+      border-bottom: 1px solid #334155;
+      color: #cbd5e1;
+    }
+    tr:nth-child(even) td {
+      background-color: #1e293b;
+    }
+    .abnormal td {
+      background-color: #450a0a !important;
+      color: #fecaca;
+    }
+    .abnormal-value {
+      font-weight: 700;
+      color: #ef4444;
+    }
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border-left-color: #0d9488;
+      animation: spin 1s linear infinite;
+      margin: 40px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .error-box {
+      background-color: #450a0a;
+      color: #fecaca;
+      border: 1px solid #991b1b;
+      padding: 16px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 500;
+      display: none;
+    }
+    .footer {
+      font-size: 11px;
+      text-align: center;
+      color: #64748b;
+      border-top: 1px solid #334155;
+      padding-top: 16px;
+      margin-top: 20px;
+    }
+    .signature {
+      text-align: right;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div id="loading">
+      <div class="spinner"></div>
+      <p style="text-align: center; color: #94a3b8;">Verifying report authentication token...</p>
+    </div>
+
+    <div id="error" class="error-box"></div>
+
+    <div id="report-container" style="display: none;">
+      <!-- Content injected by viewer.js -->
+    </div>
+  </div>
+
+  <script src="viewer.js"></script>
+</body>
+</html>

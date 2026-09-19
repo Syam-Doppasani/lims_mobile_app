@@ -1,0 +1,10 @@
+#Sat Aug 22 00:23:54 IST 2026
+base.0=C\:\\Projects\\lab-report-app\\app\\build\\intermediates\\dex\\technicianRelease\\mergeDexTechnicianRelease\\classes.dex
+base.1=C\:\\Projects\\lab-report-app\\app\\build\\intermediates\\dex\\technicianRelease\\mergeDexTechnicianRelease\\classes2.dex
+base.2=C\:\\Projects\\lab-report-app\\app\\build\\intermediates\\dex\\technicianRelease\\mergeDexTechnicianRelease\\classes3.dex
+path.0=classes.dex
+path.1=classes2.dex
+path.2=classes3.dex
+renamed.0=classes.dex
+renamed.1=classes2.dex
+renamed.2=classes3.dex
